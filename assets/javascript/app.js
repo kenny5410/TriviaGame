@@ -5,8 +5,8 @@ $(".questions").hide();
 
 //Global Variables
 
-var correctAn;
-var incorrectAn;
+var correctAn = 0;
+var incorrectAn = 0;
 var unanswered;
 var questionOne;
 var questionTwo;
@@ -17,6 +17,7 @@ var questionSix;
 
 var timerNum;
 var intervalID;
+
 
 
 //Function for timer counting down from 60 seconds
@@ -44,23 +45,26 @@ run();
 
 //Question click functions
 function questionOneLogic() {
-    $(".question-one-true").on("click", function(){
-        questionOne === true;
-        if (questionOne === true){
-            incorrectAn++;
-        }
-        else {
-            correctAn++;
-        }
+    $(".question-one-true").click(function(){
+        questionOne = true;
     })
     $(".question-one-false").click(function(){
-        questionOne === false;
+        questionOne = false;
     })
+    if (questionOne === true){
+        incorrectAn++;
+    }
+    else {
+        correctAn++;
+    }
+    console.log(correctAn);
+    console.log(incorrectAn);
 }
 
 
 
-$(".question-two-true").click(function(){
+
+/*$(".question-two-true").click(function(){
     questionTwo === true;
 })
 $(".question-two-false").click(function(){
@@ -125,7 +129,7 @@ function initialize() {
     $("#start-btn").click(function() {
         $(".questions").show();
     })
-    questionOneLogic()
+    questionOneLogic();
 }
 
 initialize();
