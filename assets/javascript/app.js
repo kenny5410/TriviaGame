@@ -1,32 +1,31 @@
-window.onload = function() {
-    $("#start-btn").on("click", reset);
-  };
-$(".questions").hide();
-
+$(document).ready(function() {
 //Global Variables
-
 var correctAn = 0;
 var incorrectAn = 0;
-var unanswered;
-var questionOne;
-var questionTwo;
-var questionThree;
-var questionFour;
-var questionFive;
-var questionSix;
-
-var timerNum;
+var unanswered = (6-(correctAn + incorrectAn));
+var timerNum = 10;
 var intervalID;
 
-
-
 //Function for timer counting down from 60 seconds
-function reset() {
-    timerNum = 60;
-}
-
 function run() {
     intervalID = setInterval(decrement, 1000);
+}
+
+//Hide contents
+$(window).on("load", hide);
+
+$("#start-btn").on("click", function() {
+    $(this).hide();
+    show();
+    run();
+});
+
+//Final Results
+function results() {
+    $("#correct-answers").html('Correct answers: ' + correctAn);
+    $("#incorrect-answers").html('Incorrect answers: ' + incorrectAn);
+    $("#unanswered").html('Unanswered: ' + unanswered);
+    $("#results").show();
 }
 
 function decrement() {
@@ -35,101 +34,34 @@ function decrement() {
 
     if (timerNum === 0) {
         stop();
+        results();
+        $(".questions").hide();
+        $("#countdown").hide();   
     }
 }
 
 function stop() {
     clearInterval(intervalID);
 }
-run();
+
+//Hide function
+function hide() {
+    $(".questions").hide();
+    $("#results").hide();
+}
+
+//Show function
+function show() {
+    $(".questions").show();
+    $("#countdown").show();
+    $("#timer").show();
+}
 
 //Question click functions
-function questionOneLogic() {
-    $(".question-one-true").click(function(){
-        questionOne = true;
-    })
-    $(".question-one-false").click(function(){
-        questionOne = false;
-    })
-    if (questionOne === true){
-        incorrectAn++;
-    }
-    else {
-        correctAn++;
-    }
-    console.log(correctAn);
-    console.log(incorrectAn);
-}
+$('input[type=radio]').on("change", function() {
+    correctAn = $('input[value=correct]:checked').length;
+    incorrectAn = $('input[value=incorrect]:checked').length;
+    unanswered = (6-(correctAn + incorrectAn));
+});
 
-
-
-
-/*$(".question-two-true").click(function(){
-    questionTwo === true;
-})
-$(".question-two-false").click(function(){
-    questionTwo === false;
-})
-
-
-//Question functions
-/*function questionLogic() {
-    function questionOneLogic() {
-        if (questionOne === true){
-            incorrectAn++;
-        }
-        else {
-            correctAn++;
-        }
-    }
-    function questionTwoLogic() {
-        if (questionTwo === true){
-            correctAn++;
-        }
-        else {
-            incorrectAn++;
-        }
-    }
-    function questionThreeLogic() {
-        if (questionThree === true){
-            correctAn++;
-        }
-        else {
-            incorrectAn++;
-        }
-    }
-    function questionFourLogic() {
-        if (questionFour === true){
-            incorrectAn++;
-        }
-        else {
-            correctAn++;
-        }
-    }
-    function questionFiveLogic() {
-        if (questionFive === true){
-            correctAn++;
-        }
-        else {
-            incorrectAn++;
-        }
-    }
-    function questionSixLogic() {
-        if (questionSix === true){
-            incorrectAn++;
-        }
-        else {
-            correctAn++;
-        }
-    }
-}*/
-
-//Main game function
-function initialize() {
-    $("#start-btn").click(function() {
-        $(".questions").show();
-    })
-    questionOneLogic();
-}
-
-initialize();
+});
