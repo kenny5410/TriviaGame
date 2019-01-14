@@ -2,7 +2,7 @@ $(document).ready(function() {
 //Global Variables
 var correctAn = 0;
 var incorrectAn = 0;
-var unanswered = (6-(correctAn + incorrectAn));
+var unanswered = 6;
 var timerNum = 10;
 var intervalID;
 
@@ -59,9 +59,13 @@ function show() {
 
 //Question click functions
 $('input[type=radio]').on("change", function() {
-    correctAn = $('input[value=correct]:checked').length;
-    incorrectAn = $('input[value=incorrect]:checked').length;
-    unanswered = (6-(correctAn + incorrectAn));
+    if ($("input[type=radio][name=options]:checked").val() === "correct") {
+        correctAn++;
+        unanswered--;
+    }else if($("input[type=radio][name=options]:checked").val() === "incorrect"){
+        incorrectAn++;
+        unanswered--;
+    }
 });
 
 });
