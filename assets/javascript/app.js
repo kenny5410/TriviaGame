@@ -3,7 +3,7 @@ $(document).ready(function() {
 var correctAn = 0;
 var incorrectAn = 0;
 var unanswered = 6;
-var timerNum = 10;
+var timerNum = 60;
 var intervalID;
 
 //Function for timer counting down from 60 seconds
@@ -57,7 +57,7 @@ function show() {
     $("#timer").show();
 }
 
-//Question click functions
+//Question value checker
 $('input[type=radio]').on("change", function() {
     if ($("input[type=radio][name=options]:checked").val() === "correct") {
         correctAn++;
